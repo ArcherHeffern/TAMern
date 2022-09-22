@@ -1,0 +1,57 @@
+.character {
+  margin: 10px auto;
+  padding: 5px 0;
+  max-width: 600px;
+  border: 2px solid black;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+}
+
+/* .character > div {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: center;
+  height: 100%;
+} */
+.main-info {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+}
+
+.main-info p {
+  justify-content: space-between;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.show-more {
+  border: none;
+  background: none;
+  color: blue;
+  cursor: pointer;
+  width: 6rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.button-container > button {
+  cursor: pointer;
+}
+
+.hidden-items {
+  width: 100%;
+  max-height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
