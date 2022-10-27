@@ -1,14 +1,14 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
-const connectDB = async () => {
-    try {
-        const connection_url = process.env.ATLAS_URI
-        const conn = mongoose.connect(connection_url, { useNewUrlParser: true, useUnifiedTopology: true })
-        console.log('Connected to mongoose'.cyan.underline)
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
+const MongoDBUrl = process.env.ATLAS_URI
+mongoose.connect(MongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+const db = mongoose.connection
+console.log("Connected to mongoose".cyan.underline)
 
-export default connectDB
+db.on("error", (err) => {
+  console.error(err)
+})
+
+db.on("open", () => {
+  console.info("Connection to MongoDB successful")
+})
