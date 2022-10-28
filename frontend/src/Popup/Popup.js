@@ -23,8 +23,7 @@ function Popup({ togglePopup, addData }) {
     grades.forEach(element => {
       grade -= element
     });
-    const personObject = { email, firstName, grade, lastName, TA, grades }
-    console.log(personObject)
+    const personObject = { email, name: { firstName, lastName }, grade, graderName: TA }
     addData(personObject)
 
     /*

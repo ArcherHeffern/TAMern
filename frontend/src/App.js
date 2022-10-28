@@ -22,10 +22,19 @@ function App() {
 
     // remove student from DB
     // !validate data or something
-    await fetch(removeStudentUrl, {
+    let response = await fetch(removeStudentUrl, {
       method: "DELETE",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ email: email })
     })
+    if (response.status === 200) {
+      window.alert("Successfully deleted Student")
+    } else {
+      window.alert(`Failed to delete student with status code ${response.status}`)
+    }
   }
 
 
@@ -59,11 +68,23 @@ function App() {
       setItems(items)
       setClosed(false)
 
+      console.log(newData)
+
       // Add item to database
-      await fetch(newStudentUrl, {
+      const response = await fetch(newStudentUrl, {
         method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(newData)
       })
+      if (response.status === 201) {
+        window.alert("Successfully added new student")
+      }
+      else {
+        window.alert(`Request failed with response code ${response.status}`)
+      }
     }
   }
 
