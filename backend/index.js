@@ -2,11 +2,7 @@ import express from "express"
 import cors from "cors"
 import router from "./routes/data.js"
 import morgan from "morgan"
-import dotenv from "dotenv"
-require("./config/db.js")
-dotenv.config()
-
-// connectDB()
+import "./config/db.js"
 
 const app = express()
 
@@ -17,5 +13,4 @@ app.use(cors())
 app.use("/api/students", router)
 const port = process.env.PORT || 9000
 
-app.listen(port, () => console.log(`server is live at http://localhost:${port}`))
-// mongoose.set('useFindAndModify', false)
+app.listen(port, () => console.log(`server is live at http://localhost:${port}/api/students`))

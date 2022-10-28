@@ -25,5 +25,12 @@ const studentSchema = new Schema({
   }
 })
 
-const student = mongoose.Model("student", studentSchema)
-module.exports = student
+/*
+{
+  strict: true,
+  strictQuery: false
+}
+*/
+
+const Student = mongoose.model("Student", studentSchema)
+export default Student

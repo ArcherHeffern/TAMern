@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
+import dotenv from "dotenv"
+dotenv.config()
 
-const MongoDBUrl = process.env.ATLAS_URI
-mongoose.connect(MongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
-console.log("Connected to mongoose".cyan.underline)
 
 db.on("error", (err) => {
   console.error(err)
