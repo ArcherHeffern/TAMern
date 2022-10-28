@@ -5,8 +5,10 @@ import Header from './Header/Header'
 import Students from './Student/Students'
 import Popup from './Popup/Popup'
 import React, { useState, useEffect } from 'react'
-const getDataUrl = 'http://localhost:9000/api/students/'
-let userData
+
+const getStudentsUrl = 'http://localhost:9000/api/students/getStudents'
+const newStudentUrl = "http://localhost:9000/api/students/newStudent"
+const removeStudentUrl = "http://localhost:9000/api/students/deleteStudent"
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -14,10 +16,19 @@ function App() {
   const [closed, setClosed] = useState(false)
 
 
-  const removeStudent = (email) => {
+  const removeStudent = async (email) => {
     const newItems = items.filter((student) => student.email !== email)
     setItems(newItems)
+
+    // remove student from DB
+    // !validate data or something
+    await fetch(removeStudentUrl, {
+      method: "DELETE",
+      body: JSON.stringify({ email: email })
+    })
   }
+
+
 
   const togglePopup = () => {
     setClosed(!closed)
@@ -25,18 +36,16 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const data = await fetch(getDataUrl)
-      console.log(data)
+      const data = await fetch(getStudentsUrl)
       const response = await data.json()
       setItems(response)
-      userData = response
     } catch (error) {
       console.log(error)
     }
     setLoading(false)
   }
 
-  const addData = (newData) => {
+  const addData = async (newData) => {
     let duplicate = false
     items.forEach((item) => {
       if (item.email === newData.email) {
@@ -45,15 +54,23 @@ function App() {
     })
     if (duplicate) window.alert('Duplicate email')
     else {
+
       items.push(newData)
       setItems(items)
       setClosed(false)
+
+      // Add item to database
+      await fetch(newStudentUrl, {
+        method: "POST",
+        body: JSON.stringify(newData)
+      })
     }
   }
 
   useEffect(() => {
     fetchData()
   }, [])
+
 
   if (loading) {
     return (
@@ -71,10 +88,8 @@ function App() {
           <button onClick={togglePopup} className='addItem'>Add item</button>
           {closed && <Popup togglePopup={togglePopup} addData={addData} />}
         </div>
-        {userData &&
-          <div className='no-items-button-container'>
-            <button className='no-items-button' onClick={() => { setItems(userData) }}>Reset List</button>
-          </div>
+        {items &&
+          <div className='no-items-button-container'></div>
         }
       </main>
     )
